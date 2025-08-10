@@ -144,50 +144,9 @@ git config --global user.email "your.email@example.com"
 
 Take a moment to look around. The Render dashboard is pretty intuitive, but it's always good to get your bearings before diving in.
 
-## Step 4: Deploy Your FastAPI App
+## Step 4: Configure Network Access in MongoDB
 
-### 4.1 Create a New Web Service
-
-1. From your Render dashboard, click "New +" button
-2. Select "Web Service"
-3. Choose "Build and deploy from a Git repository"
-4. Connect your GitHub account if you haven't already
-5. Find your FastAPI repository and click "Connect"
-
-### 4.2 Configure Your Deployment
-
-Now comes the fun part - telling Render how to run your app:
-
-**Basic Settings:**
-
-- **Name:** Give your service a name (like `my-fastapi-app`)
-- **Root Directory:** Leave this blank (unless your app is in a subfolder)
-- **Environment:** Select `Python 3`
-- **Region:** Choose the one closest to you (or your users)
-- **Branch:** `main` (or whatever your default branch is)
-
-**Build Settings:**
-
-- **Build Command:** `pip install -r requirements.txt`
-- **Start Command:** `./start.sh` (Mac) or `fastapi run --port $PORT` (Windows, or if the script doesn't work)
-
-**Instance Type:**
-
-- Select "Free" (unless you're feeling generous with your money)
-
-### 4.3 Advanced Settings (Essential for MongoDB)
-
-Click on "Advanced" and add these environment variables:
-
-- **Key:** `PYTHON_VERSION` **Value:** `3.11.0` (or whatever version you're using)
-- **Key:** `PORT` **Value:** `10000` (Render uses this port)
-- **Key:** `MONGODB_URL` **Value:** `your_mongodb_atlas_connection_string_here`
-- **Key:** `DATABASE_NAME` **Value:** `comssa-backend-workshop` (or whatever you named your database)
-
-**Important:** Replace `your_mongodb_atlas_connection_string_here` with your actual MongoDB Atlas connection string from the integration guide. It should look something like:
-`mongodb+srv://username:password@cluster0.xyz123.mongodb.net/?retryWrites=true&w=majority`
-
-## Step 4.5: Configure MongoDB Atlas for Deployment
+## Step 4.1: Configure MongoDB Atlas for Deployment
 
 Before we deploy, we need to make sure MongoDB Atlas allows connections from Render.com servers. Don't worry, this is easier than it sounds!
 
@@ -216,14 +175,55 @@ Don't panic! While this wouldn't be recommended for a production application, fo
 
 1. **Wait for the changes to take effect** (usually takes 1-2 minutes)
 
-## Step 5: Deploy and Cross Your Fingers
+## Step 5: Deploy Your FastAPI App
+
+### 5.1 Create a New Web Service
+
+1. From your Render dashboard, click "New +" button
+2. Select "Web Service"
+3. Choose "Build and deploy from a Git repository"
+4. Connect your GitHub account if you haven't already
+5. Find your FastAPI repository and click "Connect"
+
+### 5.2 Configure Your Deployment
+
+Now comes the fun part - telling Render how to run your app:
+
+**Basic Settings:**
+
+- **Name:** Give your service a name (like `my-fastapi-app`)
+- **Root Directory:** Leave this blank (unless your app is in a subfolder)
+- **Environment:** Select `Python 3`
+- **Region:** Choose the one closest to you (or your users)
+- **Branch:** `main` (or whatever your default branch is)
+
+**Build Settings:**
+
+- **Build Command:** `pip install -r requirements.txt`
+- **Start Command:** `./start.sh` (Mac) or `fastapi run --port $PORT` (Windows, or if the script doesn't work)
+
+**Instance Type:**
+
+- Select "Free" (unless you're feeling generous with your money)
+
+### 5.3 Environment Variables
+
+Click on "Advanced" and add these environment variables:
+
+- **Key:** `PYTHON_VERSION` **Value:** `3.11.0` (or whatever version you're using)
+- **Key:** `PORT` **Value:** `10000` (Render uses this port)
+- **Key:** `MONGODB_USERNAME` **Value:** `your_mongodb_username_here`
+- **Key:** `MONGODB_PASSWORD` **Value:** `your_mongodb_password_here`
+- **Key:** `DATABASE_NAME` **Value:** `your_mongodb_database_name_here`
+
+## Step 6: Deploy and Cross Your Fingers
 
 1. Review all your settings one more time
-2. Click "Create Web Service"
+2. Click "Deploy Web Service"
 3. Watch the build logs (this is oddly satisfying)
 4. Wait for the magic to happen (usually takes 2-5 minutes)
 
-## Step 6: Test Your Deployment
+## Step 7: Test Your Deployment
 
 Once the deployment is complete, Render will give you a URL that looks something like:
 `https://your-app-name.onrender.com`
@@ -231,7 +231,11 @@ Once the deployment is complete, Render will give you a URL that looks something
 Click on it! If everything worked correctly, you should see your FastAPI app's response:
 
 ```json
-{ "message": "Hello World! 🌍" }
+{
+  "message": "Hello World! Now with MongoDB power!",
+  "database": "Connected to MongoDB Atlas",
+  "version": "2.0.0"
+}
 ```
 
 You can also test your other endpoints:
