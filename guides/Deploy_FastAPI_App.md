@@ -58,17 +58,6 @@ pip freeze > requirements.txt
 pip freeze > requirements.txt
 ```
 
-**Alternative method if you want to be more precise:**
-Create a file called `requirements.txt` in your project folder and add:
-
-```
-fastapi[standard]>=0.116.1
-pymongo>=4.0.0
-python-dotenv>=0.19.0
-```
-
-**Note:** Since your app integrates with MongoDB, make sure `pymongo` and `python-dotenv` are included. These should already be installed if you followed the MongoDB integration guide!
-
 ### 1.2 Create a startup script
 
 Render needs to know how to start your app. Create a file called `start.sh` in your project root:
