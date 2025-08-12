@@ -28,12 +28,6 @@ app = FastAPI(
 )
 
 
-# @app.on_event("startup")  # This runs when the app starts
-# def startup_event():
-#     """Test database connection when the app starts"""
-#     ping_database()
-
-
 # Root endpoint - your first API endpoint!
 @app.get("/")
 def read_root():
